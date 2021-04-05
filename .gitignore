@@ -148,7 +148,7 @@ dmypy.json
 # operating system-related files
 *.DS_Store #file properties cache/storage on macOS
 Thumbs.db #thumbnail cache on Windows
-
+.DS_Store
 # profiling data
 .prof
 
