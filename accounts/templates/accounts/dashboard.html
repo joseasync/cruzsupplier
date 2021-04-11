@@ -23,6 +23,15 @@
                     </tr>
                 </thead>
             <tbody>
+             {% for order in orders %}
+                <tr>
+                    <td>{{ order.product }}</td>
+                    <td>{{ order.date_created }}</td>
+                    <td>{{ order.status}}</td>
+                    <td><a class="btn btn-primary" href=""> Update Order</a></td>
+                    <td><a class="btn btn-primary" href=""> Remove Order</a></td>
+                </tr>
+                {% endfor %}
             </tbody>
             </table>
 
@@ -37,17 +46,17 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Customer</th>
                     <th scope="col">Orders</th>
                     </tr>
                 </thead>
             <tbody>
+                 {% for customer in customers %}
                 <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.phone}}</td>
                 </tr>
+                {% endfor %}
             </tbody>
             </table>
 
