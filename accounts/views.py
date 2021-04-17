@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
+from .forms import OrderForm
 
 def home(request):
     orders = Order.objects.all()
@@ -24,6 +25,49 @@ def products(request):
     return render(request, 'accounts/products.html', {'products': products})
 
 
-def customer(request):    
-    return render(request, 'accounts/customer.html')
+def customer(request, pk_customer):
+    customer = Customer.objects.get(id=pk_customer)
+    orders = customer.order_set.all()
+    total_orders = orders.count()
+    context = {'customer': customer, 'orders': orders, 'total_orders' : total_orders}
+    return render(request, 'accounts/customer.html', context)
 
+
+def createOrder(request):
+    form = OrderForm()
+
+    if request.method == 'POST':
+        # print('Print Post', request.POST)
+        form = OrderForm(request.POST) # O orderFOrm vai gerenciar isso pra gente....
+        #Se o form tiver show, ele salva o dado no db
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form }
+    return render(request, 'accounts/order_form.html', context)
+
+def updateOrder(request, pk):
+   
+    order = Order.objects.get(id=pk)
+    form = OrderForm(instance=order) #preenche a instancia.
+    
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order) # Utiliza a instancia do order pra poder atualizar... 
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+
+    context = { 'form': form, }
+    return render(request, 'accounts/order_form.html', context)
+
+def deleteOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('/')
+
+
+    context = { 'item': order }
+    return render(request, 'accounts/delete.html', context)
