@@ -1,0 +1,53 @@
+{% load static %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static '/css/login.css'%}">
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <div class="fadeIn first">
+      <img src="{% static 'images/user_icon.png' %}" width="50" height="50" id="icon" alt="Cruz Supplier" />
+    </div>
+
+
+
+    <form action='' method="POST">
+    {% csrf_token %}
+    {{form.username}}
+
+    {{form.email}}
+
+    {{form.password1}}
+
+    {{form.password2}}
+      <input type="submit" class="fadeIn fourth" value="register">
+    </form>
+    {{form.errors}}
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="{% url 'login' %}">Login</a>
+    </div>
+
+  </div>
+</div>
+<script >
+    var username = document.getElementById("id_username");
+    username.className = "fadeIn second";
+    username.placeholder = "Username"
+    
+
+    var email = document.getElementById("id_email");
+    email.className = "fadeIn second";
+    email.placeholder = "Email"
+
+    var password1 = document.getElementById("id_password1");
+    password1.className = "fadeIn third";
+    password1.placeholder = "Password"
+
+
+    var password2 = document.getElementById("id_password2");
+    password2.className = "fadeIn third";
+    password2.placeholder = "Confirm Password"
+
+</script>
